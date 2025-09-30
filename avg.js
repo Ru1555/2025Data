@@ -10,3 +10,8 @@ function avg(score){
     return average;
     
 }
+
+//Test
+//var Score = [90, 98, 85, 100, 100, 86, 94];
+var Score = [];
+console.log(Score.toString()+ "Average: " + avg(Score));
