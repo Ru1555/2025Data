@@ -17,4 +17,5 @@ function sum2(n){
 }
 
 //test
+var n = 100;//readline
 console.log("1-2+3-4+..." +n+ "=" + sum2(n)); 
