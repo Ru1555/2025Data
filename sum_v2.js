@@ -7,13 +7,15 @@ function sum2(n){
     }
     else{
         for(var i=1; i<=n; i++){
-            // if(i%2==0) // %=除以會有餘數
+            // if(i%2==0) // %算餘數
             //     sum -= i;
             // else
             //     sum += i; //奇數
             (i%2==0) ? sum -= i : sum += i; //三元運算子
         }
-        return sum;  
+        return sum; 
+        //O(1) 
+        //return (n%2==0) ? (-1)*(n/2) : (n+1)/2; //公式解
     }
      
 }
