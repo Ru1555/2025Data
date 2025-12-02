@@ -1,79 +1,159 @@
 var MAZE = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1],
-    [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1],
     [1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1],
     [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1],
     [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1],
     [1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1],
     [1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+    [1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1],
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];//8,10
 
 class Point{
-    constructor(_row, _col){
+    constructor(_row,_col){
+        this.row= _row;
+        this.col=_col;
+    }
+}
+class Point {
+    constructor(_row, _col) {
         this.row = _row;
         this.col = _col;
     }
 }
 
-var start = new Point(1, 1);
-var end = new Point(8, 10);
-var Stack = [];
-var Direction = [[-1, 0], [0, -1], [1, 0], [0, 1]].sort((a, b) => { return Math.random() - 0.5 });//permutation
+var start=new Point(1,1);
+var end = new Point(8,10);
+var Stack=[];
+var Direction=[[-1,0],[0,-1],[1,0],[0,1]].sort((a,b)=>{return Math.random()-0.5});
 
-var CP = start;//currentPosition
+var CP=start;//currentPosition
 do{
-    MAZE[CP.row][CP.col] = 2;
-    drawBoard();
+    MAZE[CP.row][CP.col]=2;
     //4 directions
-
-    if(MAZE[CP.row + Direction[0][0]][CP.col + Direction[0][1]] == 0){//dir0
+    if(MAZE[CP.row+Direction[0][0]][CP.col+Direction[0][1]]==0){//dir0
         Stack.push(CP);
-        CP = new Point(CP.row + Direction[0][0], CP.col + Direction[0][1]);
-    }
-    else if(MAZE[CP.row + Direction[1][0]][CP.col + Direction[1][1]] == 0){ //dir1
+        CP = new Point(CP.row+Direction[0][0],CP.col+Direction[0][1]);
+    }else if(MAZE[CP.row+Direction[1][0]][CP.col+Direction[1][1]]==0){ //dir1
         Stack.push(CP);
-        CP = new Point(CP.row + Direction[1][0], CP.col + Direction[1][1]);
-    }
-    else if(MAZE[CP.row+1][CP.col] == 0){//dir2
+        CP = new Point(CP.row+Direction[1][0],CP.col+Direction[1][1]);
+    }else if(MAZE[CP.row+1][CP.col]==0){//dir2
         Stack.push(CP);
-        CP = new Point(CP.row + 1, CP.col);
-    }
-    else if(MAZE[CP.row][CP.col+1] == 0){//dir3
+        CP = new Point(CP.row+1,CP.col);
+    }else if(MAZE[CP.row][CP.col+1]==0){//dir3
         Stack.push(CP);
-        CP = new Point(CP.row, CP.col + 1);
-    }
-    else{
-        if(Stack.length > 0){
+        CP = new Point(CP.row,CP.col+1);
+    }else{
+        if(Stack.length>0){
             //pop
-            CP = Stack.pop();
+            CP=Stack.pop();
         }
         else{
             //no solution
             console.log("No solution!");
             break;
         }
-    }   
-    //while(!(CP.row == end.row && CP.col == end.col));
+    }
+var start = new Point(1, 1);
+var end = new Point(8, 10);
+var Stack = [];
+var Direction = [[-1, 0], [0, -1], [1, 0], [0, 1]].sort((a, b) => { return Math.random() - 0.5 });//permutation
 
-}while(CP.row !== end.row || CP.col !== end.col);
+var CP = start;//currentPosition
 
-// if(Stack.length>0){
-//   //print path 
-//   Stack.push(end);
-//   Stack.forEach((item,index)=>{
-//        console.log("Step "+(index+1)+" to ["+item.row+"]["+item.col+"]");
-//   })
+go();
 
-// }
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-function drawBoard(){
+async function go() {
+    do {
+        MAZE[CP.row][CP.col] = 2;
+        await(delay(500));
+        drawBoard();
+
+
+        //4 directions
+        if (MAZE[CP.row + Direction[0][0]][CP.col + Direction[0][1]] == 0) {//dir0
+            Stack.push(CP);
+            CP = new Point(CP.row + Direction[0][0], CP.col + Direction[0][1]);
+        } else if (MAZE[CP.row + Direction[1][0]][CP.col + Direction[1][1]] == 0) { //dir1
+            Stack.push(CP);
+            CP = new Point(CP.row + Direction[1][0], CP.col + Direction[1][1]);
+        } else if (MAZE[CP.row + Direction[2][0]][CP.col + Direction[2][1]] == 0) {//dir2
+            Stack.push(CP);
+            CP = new Point(CP.row + Direction[2][0], CP.col + Direction[2][1]);
+        } else if (MAZE[CP.row + Direction[3][0]][CP.col + Direction[3][1]] == 0) {//dir3
+            Stack.push(CP);
+            CP = new Point(CP.row + Direction[3][0], CP.col + Direction[3][1]);
+        } else {
+            if (Stack.length > 0) {
+                //pop
+                CP = Stack.pop();
+            }
+            else {
+                //no solution
+                console.log("No solution!");
+                break;
+            }
+        }
+        //}while(!(CP.row==end.row && CP.col==end.col));
+    } while (CP.row != end.row || CP.col != end.col);
+    
+    if (Stack.length > 0) {
+        MAZE[CP.row][CP.col] = 2;
+        drawBoard();
+        //print path 
+        Stack.push(end);
+        // Stack.forEach((item, index) => {
+        //     //console.log("Step "+(index+1)+" to ["+item.row+"]["+item.col+"]");
+        //     await(delay(500));
+        //     drawPoint(item.row, item.col, "#ff0000");
+            
+            
+        // })
+        do{
+            //var item=Stack.pop();
+            var item = Stack.shift();  //push <-> unshift
+            await(delay(500));
+            drawPoint(item.row, item.col, "#ff0000");
+        }while(Stack.length>0);
+
+    }
+//}while(!(CP.row==end.row && CP.col==end.col));
+}while(CP.row!=end.row || CP.col!=end.col);
+}
+
+function drawPoint(row, col, color) {
+    while (true) {
+        var canvas = document.getElementById("board").getContext("2d");
+        canvas.fillStyle = color;
+        canvas.fillRect(col * size, row * size, size, size);
+        canvas.strokeRect(col * size, row * size, size, size);
+        break; // Add a break to avoid an infinite loop
+    }
+}
     var canvas = document.getElementById("board").getContext("2d");
-    var size = Math.floor(Math.min(canvas.canvas.height/MAZE.length, canvas.canvas.width/MAZE[0].length));
-    for(let row = 0; row < MAZE.length; row++){
-        for(let col = 0; col < MAZE[0].length; col++){
+    var size = Math.floor(Math.min(canvas.canvas.height / MAZE.length, canvas.canvas.width / MAZE[0].length));
+
+if (Stack.length > 0) {
+    //print path 
+    Stack.push(end);
+    Stack.forEach((item, index) => {
+        console.log("Step " + (index + 1) + " to [" + item.row + "][" + item.col + "]");
+    });
+    canvas.fillStyle = color;
+
+    canvas.fillRect(col * size, row * size, size, size);
+    canvas.strokeRect(col * size, row * size, size, size);
+}
+
+function drawBoard() {
+    var canvas = document.getElementById("board").getContext("2d");
+    var size = Math.floor(Math.min(canvas.canvas.height / MAZE.length, canvas.canvas.width / MAZE[0].length));
+    for (let row = 0; row < MAZE.length; row++) {
+        for (let col = 0; col < MAZE[0].length; col++) {
             // if(MAZE[row][col]==0){
 
             // }else if(MAZE[row][col]==1){
@@ -83,7 +163,7 @@ function drawBoard(){
             // }else{
 
             // }
-            switch(MAZE[row][col]){
+            switch (MAZE[row][col]) {
                 case 0:
                     canvas.fillStyle = "#ffffff";
                     break;
@@ -94,9 +174,12 @@ function drawBoard(){
                     canvas.fillStyle = "#00ff00";
                     break;
                 default:
+
             };
             canvas.fillRect(col * size, row * size, size, size);
             canvas.strokeRect(col * size, row * size, size, size);
+
         }
+
     }
 }
